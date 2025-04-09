@@ -9,7 +9,10 @@
     "build": "pnpm run clean && tsc",
     "publish": "",
     "test-linter": "eslint . --ext .ts",
-    "test-type": "tsc --noEmit"
+    "test-type": "tsc --noEmit",
+    "link": "pnpm link",
+    "unlink": "pnpm unlink",
+    "watch": "tsc --watch"
   },
   "files": [
     "dist"
@@ -31,5 +34,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "dependencies": {
+    "posthog-js": "^1.235.3",
+    "uuidv7": "^1.0.2"
   }
 }
