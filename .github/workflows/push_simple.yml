@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+name: PR tests (Using NX)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+      - name: Install dependencies
+        run: |
+          pnpm install
+      - name: Run linting
+        run: |
+          pnpm test-linter
+      - name: Run type checking
+        run: |
+          pnpm test-type
