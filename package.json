@@ -1,5 +1,5 @@
 {
-  "name": "@dialog/dialog-custom-sdk",
+  "name": "@askdialog/dialog-custom-sdk",
   "version": "1.0.0",
   "description": "Dialog Custom SDK",
   "main": "dist/index.js",
