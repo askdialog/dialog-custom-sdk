@@ -40,6 +40,6 @@ jobs:
           pnpm build:prod
       - name: Deploy
         run: |
-          pnpm publish
+          pnpm publish --no-git-checks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
