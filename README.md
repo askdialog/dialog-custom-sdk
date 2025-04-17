@@ -7,11 +7,11 @@ Dialog Custom SDK is a TypeScript library that allows easy integration of the Di
 ## Installation
 
 ```bash
-npm install @dialog/dialog-custom-sdk
+npm install @dialog/dialog-sdk
 # or
-pnpm add @dialog/dialog-custom-sdk
+pnpm add @dialog/dialog-sdk
 # or
-yarn add @dialog/dialog-custom-sdk
+yarn add @dialog/dialog-sdk
 ```
 
 ## Main Features

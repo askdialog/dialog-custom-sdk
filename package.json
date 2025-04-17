@@ -1,7 +1,7 @@
 {
-  "name": "@askdialog/dialog-custom-sdk",
+  "name": "@askdialog/dialog-sdk",
   "version": "1.0.0",
-  "description": "Dialog Custom SDK",
+  "description": "Dialog SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
