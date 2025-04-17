@@ -1,0 +1,39 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - staging
+
+concurrency:
+  group: staging
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: 🏗 🧪 Run Tests & 📦 Build
+    runs-on: [self-hosted, dialog-github-runners]
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.1
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: |
+          pnpm install
+      - name: Run linting
+        run: |
+          pnpm test-linter
+      - name: Run type checking
+        run: |
+          pnpm test-type
+      - name: Build
+        run: |
+          pnpm build:prod

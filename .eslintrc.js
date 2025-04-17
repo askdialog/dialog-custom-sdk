@@ -39,12 +39,7 @@ module.exports = {
         peerDependencies: false,
       },
     ],
-    'no-shadow': [
-      'error',
-      {
-        hoist: 'all',
-      },
-    ],
+    'no-shadow': 'off',
     'prefer-const': 'error',
     'import/order': [
       'error',

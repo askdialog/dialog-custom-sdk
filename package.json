@@ -4,12 +4,24 @@
   "description": "Dialog Custom SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && tsc",
-    "publish": "",
+    "set-config": "chmod +x scripts/set-config.sh && ./scripts/set-config.sh",
+    "build:dev": "pnpm run clean && pnpm run set-config development && tsc",
+    "build:prod": "pnpm run clean && pnpm run set-config production && tsc",
+    "publish": "pnpm publish",
     "test-linter": "eslint . --ext .ts",
-    "test-type": "tsc --noEmit"
+    "test-type": "tsc --noEmit",
+    "link": "pnpm link --global",
+    "unlink": "pnpm unlink",
+    "watch": "tsc --watch"
   },
   "files": [
     "dist"
@@ -31,5 +43,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "dependencies": {
+    "posthog-js": "^1.235.3",
+    "uuidv7": "^1.0.2"
   }
 }
