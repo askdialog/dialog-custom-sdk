@@ -10,10 +10,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
-    name: 🏗 🧪 Run Tests & 📦 Build
+  setup:
+    name: 🛠️ Setup
     runs-on: [self-hosted, dialog-github-runners]
-    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,19 +26,63 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        run: |
-          pnpm install
+        run: pnpm install
+      - name: Cache workspace
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: ${{ runner.os }}-workspace-${{ github.sha }}
+
+  tests:
+    name: 🧪 Run Tests
+    needs: setup
+    runs-on: [self-hosted, dialog-github-runners]
+    steps:
+      - name: Restore workspace
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: ${{ runner.os }}-workspace-${{ github.sha }}
       - name: Run linting
-        run: |
-          pnpm test-linter
+        run: pnpm test-linter
       - name: Run type checking
-        run: |
-          pnpm test-type
+        run: pnpm test-type
+
+  build:
+    name: 🏗 Build
+    needs: tests
+    runs-on: [self-hosted, dialog-github-runners]
+    steps:
+      - name: Restore workspace
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: ${{ runner.os }}-workspace-${{ github.sha }}
       - name: Build
-        run: |
-          pnpm build:prod
-      - name: Deploy
-        run: |
-          pnpm publish
+        run: pnpm build:prod
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
+
+  publish:
+    if: ${{false}} # Pause for now auto publishing
+    name: 📦 Publish
+    needs: build
+    runs-on: [self-hosted, dialog-github-runners]
+    steps:
+      - name: Restore workspace
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: ${{ runner.os }}-workspace-${{ github.sha }}
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
+      - name: Publish
+        run: pnpm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
