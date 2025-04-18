@@ -10,9 +10,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup:
-    name: 🛠️ Setup
+  tests:
+    name: 🧪 Run Tests & 🏗 Build
     runs-on: [self-hosted, dialog-github-runners]
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,39 +25,15 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        run: pnpm install
-      - name: Cache workspace
-        uses: actions/cache@v3
-        with:
-          path: .
-          key: ${{ runner.os }}-workspace-${{ github.sha }}
-
-  tests:
-    name: 🧪 Run Tests
-    needs: setup
-    runs-on: [self-hosted, dialog-github-runners]
-    steps:
-      - name: Restore workspace
-        uses: actions/cache@v3
-        with:
-          path: .
-          key: ${{ runner.os }}-workspace-${{ github.sha }}
+        run: |
+          pnpm install
       - name: Run linting
-        run: pnpm test-linter
+        run: |
+          pnpm test-linter
       - name: Run type checking
-        run: pnpm test-type
-
-  build:
-    name: 🏗 Build
-    needs: tests
-    runs-on: [self-hosted, dialog-github-runners]
-    steps:
-      - name: Restore workspace
-        uses: actions/cache@v3
-        with:
-          path: .
-          key: ${{ runner.os }}-workspace-${{ github.sha }}
+        run: |
+          pnpm test-type
       - name: Build
-        run: pnpm build:prod
+        run: |
+          pnpm build:prod
