@@ -49,6 +49,7 @@ jobs:
         run: pnpm test-type
 
   build:
+    if: ${{false}} # Pause for now auto publishing
     name: 🏗 Build
     needs: tests
     runs-on: [self-hosted, dialog-github-runners]
