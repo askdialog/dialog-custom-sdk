@@ -59,30 +59,10 @@ jobs:
           path: .
           key: ${{ runner.os }}-workspace-${{ github.sha }}
       - name: Build
-        run: pnpm build:prod
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: dist/
-
-  publish:
-    if: ${{false}} # Pause for now auto publishing
-    name: 📦 Publish
-    needs: build
-    runs-on: [self-hosted, dialog-github-runners]
-    steps:
-      - name: Restore workspace
-        uses: actions/cache@v3
-        with:
-          path: .
-          key: ${{ runner.os }}-workspace-${{ github.sha }}
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
-          path: dist/
-      - name: Publish
-        run: pnpm publish
+        run: |
+          pnpm build:prod
+      - name: Deploy
+        run: |
+          pnpm publish --no-git-checks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
