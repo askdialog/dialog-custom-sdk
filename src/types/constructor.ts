@@ -1,4 +1,4 @@
-import { Product } from './product';
+import { SimplifiedProduct } from './product';
 import { Theme } from './theme';
 
 export interface DialogConstructor {
@@ -14,7 +14,10 @@ export interface DialogConstructor {
       variantId: string;
       quantity: number;
     }) => Promise<void>;
-    getProduct: (productId: string, variantId: string) => Promise<Product>;
+    getProduct: (
+      productId: string,
+      variantId: string,
+    ) => Promise<SimplifiedProduct>;
   };
   theme?: Partial<Theme>;
   userId?: string;
