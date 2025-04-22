@@ -14,7 +14,7 @@ import {
   OpenAssistantPayload,
   ProductQuestionPayload,
 } from './types/events';
-import { Product } from './types/product';
+import { SimplifiedProduct } from './types/product';
 import { EventsHandler } from './EventsHandler';
 import { Tracking } from './Tracking';
 import { TrackingEvents } from './types/trackings';
@@ -33,7 +33,10 @@ export class Dialog {
       variantId: string;
       quantity: number;
     }) => Promise<void>;
-    getProduct: (productId: string, variantId: string) => Promise<Product>;
+    getProduct: (
+      productId: string,
+      variantId: string,
+    ) => Promise<SimplifiedProduct>;
   };
   private _theme: Theme;
   private _userId: string;
@@ -48,6 +51,9 @@ export class Dialog {
     this._userId = this._createOrRetrieveUserId(userId);
     this._eventsHandler = new EventsHandler();
     this._tracking = new Tracking(apiKey);
+    window.dialog = {
+      instance: this,
+    };
   }
 
   public get theme(): Theme {
@@ -102,7 +108,10 @@ export class Dialog {
     );
   }
 
-  public getProduct(productId: string, variantId: string): Promise<Product> {
+  public getProduct(
+    productId: string,
+    variantId: string,
+  ): Promise<SimplifiedProduct> {
     return this._callbacks.getProduct(productId, variantId);
   }
 

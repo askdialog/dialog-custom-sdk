@@ -6,8 +6,6 @@ Dialog is an AI assistant designed to boost e-commerce sales by providing intell
 
 Visit our website: [Dialog AI Assistant](https://www.askdialog.com/)
 
-Need to see it in action? [Request one here](https://w1rsh3lwqfo.typeform.com/to/VxHL0RBR?typeform-source=dialog-sdk)
-
 ## Description
 
 Dialog SDK is a powerful TypeScript library that seamlessly integrates the Dialog AI assistant into your applications. It provides a comprehensive set of tools for managing assistant interactions, handling e-commerce operations like product fetching and cart management, and customizing the assistant's appearance to match your brand.
