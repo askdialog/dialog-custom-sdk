@@ -16,7 +16,7 @@ export interface DialogConstructor {
     }) => Promise<void>;
     getProduct: (
       productId: string,
-      variantId: string,
+      variantId?: string,
     ) => Promise<SimplifiedProduct>;
   };
   theme?: Partial<Theme>;

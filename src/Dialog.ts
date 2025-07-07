@@ -19,6 +19,7 @@ import { EventsHandler } from './EventsHandler';
 import { Tracking } from './Tracking';
 import { TrackingEvents } from './types/trackings';
 import { loadSuggestions } from './services/suggestions';
+import { config } from './config';
 export class Dialog {
   private _apiKey: string;
   private _locale: string;
@@ -35,7 +36,7 @@ export class Dialog {
     }) => Promise<void>;
     getProduct: (
       productId: string,
-      variantId: string,
+      variantId?: string,
     ) => Promise<SimplifiedProduct>;
   };
   private _theme: Theme;
@@ -54,13 +55,20 @@ export class Dialog {
     window.dialog = {
       instance: this,
     };
+    this._loadAssistant();
   }
 
+  public get apiKey(): string {
+    return this._apiKey;
+  }
   public get theme(): Theme {
     return this._theme;
   }
   public get userId(): string {
     return this._userId;
+  }
+  public get locale(): string {
+    return this._locale;
   }
 
   public getLocalizationInformations(): DetailedLocaleInfo | null {
@@ -110,7 +118,7 @@ export class Dialog {
 
   public getProduct(
     productId: string,
-    variantId: string,
+    variantId?: string,
   ): Promise<SimplifiedProduct> {
     return this._callbacks.getProduct(productId, variantId);
   }
@@ -145,5 +153,32 @@ export class Dialog {
 
   public registerSubmitCheckoutEvent(): void {
     this._tracking.track(TrackingEvents.USER_SUBMITTED_CHECKOUT);
+  }
+
+  private _loadAssistant(): void {
+    const localeInfo = getDetailedLocaleInfo(this._locale);
+
+    if (localeInfo === null) {
+      console.error('Missing locale information');
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.defer = true;
+    script.async = true;
+    script.src = config.assistantUrl;
+    document.head.insertBefore(script, document.head.firstChild);
+
+    
+
+    const div = document.createElement('div');
+    div.id = 'dialog-shopify-ai';
+    div.dataset.shopIsoCode = this._locale;
+    div.dataset.apiKey = this._apiKey;
+    div.dataset.userId = this._userId;
+    div.dataset.countryCode = localeInfo.countryCode;
+    div.dataset.language = localeInfo.language;
+    document.body.appendChild(div);
   }
 }

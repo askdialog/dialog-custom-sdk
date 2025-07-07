@@ -2,6 +2,7 @@ export interface DetailedLocaleInfo {
   language: string;
   countryCode: string;
   formatted: string;
+  locale: string;
 }
 
 export const getDetailedLocaleInfo = (
@@ -23,6 +24,7 @@ export const getDetailedLocaleInfo = (
       language: languageName,
       countryCode,
       formatted: `${language}-${countryCode}`,
+      locale
     };
   } catch (e) {
     return null;
