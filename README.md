@@ -37,8 +37,8 @@ const client = new Dialog({
   apiKey: 'YOUR_API_KEY', // required
   locale: 'TARGETED_LOCALE', // required
   callbacks: {
-    addToCart: () => Promise<void>, // required
-    getProduct: () => Promise<Product>, // required
+    addToCart: async () => Promise<void>, // required
+    getProduct: async () => Promise<Product>, // required
   },
 });
 ```
@@ -48,7 +48,7 @@ The locale specifies the language you want to use.
 The addToCart function is triggered when a user clicks the AddToCart button.
 The getProduct function is used to display product information in the assistant.
 
-When the client is instantiated, it will automatically insert in the DOM the Dialog Assistant script, so you can interact with the assistant with `sendProductMessage` and `sendGenericMessage`.
+When the client is instantiated, it will automatically insert into the DOM the Dialog Assistant script, so you can interact with the assistant using `sendProductMessage` or `sendGenericMessage`.
 
 ### Getters
 
@@ -161,10 +161,10 @@ const client = new Dialog({
 
 ### Theming (Still in construction)
 
-We are currently working on the theming part so you may find some issues. Contact us if you need more customisation.
+We are currently working on the theming part so you may find some issues. Contact us if you need more customization.
 
 
-⚠️ Title, description and content properties are used only to theme the vue component for the moment.
+⚠️ Title, description and content properties are used only to theme the Vue component for the moment.
 
 ```typescript
 const client = new Dialog({
