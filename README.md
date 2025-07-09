@@ -120,6 +120,7 @@ Example of expected result:
     "inputPlaceholder": "Ask any question...",
     "description": "Ask any question about this product"
 }
+*/
 ```
 
 
@@ -180,11 +181,11 @@ const client = new Dialog({
         fontSize?: string;
         color?: string;
     }
-    description?: {
+    description?: { // Used in Vue component only
         fontSize?: string;
         color?: string;
     }
-    content?: {
+    content?: { // Used in Vue component only
         fontSize?: string;
         color?: string;
     }
