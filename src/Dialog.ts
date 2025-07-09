@@ -97,10 +97,12 @@ export class Dialog {
     return loadSuggestions(this._apiKey, this._locale, productId);
   }
 
+  // TODO: Not yet implemented on assistant
   public openAssistant(params: OpenAssistantPayload): void {
     this._eventsHandler.emitExternalEvent(DialogEvents.OPEN_ASSISTANT, params);
   }
 
+  // TODO: Not yet implemented on assistant
   public closeAssistant(): void {
     this._eventsHandler.emitExternalEvent(DialogEvents.CLOSE_ASSISTANT);
   }

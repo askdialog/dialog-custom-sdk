@@ -48,6 +48,15 @@ The locale specifies the language you want to use.
 The addToCart function is triggered when a user clicks the AddToCart button.
 The getProduct function is used to display product information in the assistant.
 
+When the client is instantiated, it will automatically insert in the DOM the Dialog Assistant script, so you can interact with the assistant with `sendProductMessage` and `sendGenericMessage`.
+
+### Getters
+
+- apiKey
+- theme
+- userId
+- locale
+
 ### Features
 
 - Send a message with context
@@ -69,6 +78,50 @@ client.sendGenericMessage({
   question: 'YOUR_QUESTION', // required
 });
 ```
+
+- Get locale information
+
+```typescript 
+const localizationInfos = await client.getLocalizationInformations();
+
+/*
+Example of expected result when locale: 'en'
+{
+  countryCode: "US",
+  formatted: "en-US",
+  language: "English",
+  locale: "en"
+}
+*/
+```
+
+- Get suggestion questions
+
+You can use this query to make your own integration and trigger `sendProductMessage` or `sendGenericMessage` on user click.
+
+```typescript
+const suggestions = await client.getSuggestions(productId);
+
+/*
+Example of expected result:
+{
+    "questions": [
+        {
+            "question": "What is the formula used in this repairing gel to soothe the skin after sun exposure?"
+        },
+        {
+            "question": "How does this gel relieve sunburn and reduce pain?"
+        },
+        {
+            "question": "What are the benefits for the skin after using this product following excessive exposure to UV rays?"
+        }
+    ],
+    "assistantName": "Your expert",
+    "inputPlaceholder": "Ask any question...",
+    "description": "Ask any question about this product"
+}
+```
+
 
 - Handler for fetch product
 
@@ -103,3 +156,40 @@ const client = new Dialog({
     },
 });
 ```
+
+
+### Theming (Still in construction)
+
+We are currently working on the theming part so you may find some issues. Contact us if you need more customisation.
+
+
+⚠️ Title, description and content properties are used only to theme the vue component for the moment.
+
+```typescript
+const client = new Dialog({
+  ...,
+  theme: {
+    backgroundColor?: string;
+    primaryColor?: string;
+    ctaTextColor?: string;
+    ctaBorderType?: 'straight' | 'rounded';
+    capitalizeCtas?: boolean;
+    fontFamily?: string;
+    highlightProductName?: boolean;
+    title?: { // Used in Vue component only
+        fontSize?: string;
+        color?: string;
+    }
+    description?: {
+        fontSize?: string;
+        color?: string;
+    }
+    content?: {
+        fontSize?: string;
+        color?: string;
+    }
+  }
+});
+```
+
+
