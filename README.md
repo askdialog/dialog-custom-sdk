@@ -37,8 +37,19 @@ const client = new Dialog({
   apiKey: 'YOUR_API_KEY', // required
   locale: 'TARGETED_LOCALE', // required
   callbacks: {
-    addToCart: async () => Promise<void>, // required
-    getProduct: async () => Promise<Product>, // required
+    addToCart: async ({
+    productId,
+    quantity,
+    variantId,
+  }: {
+    productId: string;
+    quantity: number;
+    variantId?: string;
+  }) => Promise<void>, // required
+    getProduct: async (
+        productId: string,
+        variantId?: string
+    ) => Promise<SimplifiedProduct>, // required
   },
 });
 ```
@@ -130,12 +141,16 @@ Example of expected result:
 const client = new Dialog({
     ...,
     callbacks: {
-        getProduct: () => {
-            // Call your api to retrieve product information
-            const response = await fetch('....');
-            const data = await response.json();
-            // To define
-            return {};
+        getProduct: (
+            productId: string,
+            variantId?: string): Promise<SimplifiedProduct> => {
+                // Call your api to retrieve product information
+                const response = await fetch('....');
+                const data = await response.json();
+                // Need to match SimplifiedProduct type
+                return {
+                    ...
+                };
         }
     },
 });
@@ -147,7 +162,15 @@ const client = new Dialog({
 const client = new Dialog({
     ...,
     callbacks: {
-        addToCart: () => {
+        addToCart: ({
+            productId,
+            quantity,
+            variantId,
+        }: {
+            productId: string;
+            quantity: number;
+            variantId?: string;
+        }): Promise<void> => {
             // Call your api to trigger addToCart
             const response = await fetch('....');
 

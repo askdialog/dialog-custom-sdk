@@ -31,7 +31,7 @@ export class Dialog {
       quantity,
     }: {
       productId: string;
-      variantId: string;
+      variantId?: string;
       quantity: number;
     }) => Promise<void>;
     getProduct: (
@@ -127,12 +127,12 @@ export class Dialog {
 
   public addToCart({
     productId,
-    variantId,
     quantity,
+    variantId,
   }: {
     productId: string;
-    variantId: string;
     quantity: number;
+    variantId?: string;
   }): Promise<void> {
     return this._callbacks.addToCart({ productId, variantId, quantity });
   }

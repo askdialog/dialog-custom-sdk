@@ -7,12 +7,12 @@ export interface DialogConstructor {
   callbacks: {
     addToCart: ({
       productId,
-      variantId,
       quantity,
+      variantId,
     }: {
       productId: string;
-      variantId: string;
       quantity: number;
+      variantId?: string;
     }) => Promise<void>;
     getProduct: (
       productId: string,
