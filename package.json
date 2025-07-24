@@ -22,7 +22,11 @@
     "test-type": "tsc --noEmit",
     "link": "pnpm link --global",
     "unlink": "pnpm unlink",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "build:bundle:esm": "pnpm run build:prod && mkdir -p bundle && esbuild src/index.ts --bundle --platform=browser --format=esm --minify --outfile=bundle/dialog-sdk.$npm_package_version.min.js",
+    "deploy:s3": "aws s3 cp bundle/dialog-sdk.$npm_package_version.min.js s3://dialog-sdk/",
+    "deploy:cloudfront": "aws cloudfront create-invalidation --distribution-id E3NRPUUF94K3P6 --paths \"/dialog-sdk.$npm_package_version.min.js\"",
+    "deploy:cdn": "pnpm run build:prod && pnpm run build:bundle:esm && pnpm run deploy:s3 && pnpm run deploy:cloudfront"
   },
   "files": [
     "dist"
@@ -40,6 +44,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "esbuild": "^0.25.8",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^4.3.2",

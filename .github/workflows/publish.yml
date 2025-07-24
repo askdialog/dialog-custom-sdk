@@ -1,0 +1,42 @@
+name: Build & Publish Dialog SDK & Upload to CDN
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-publish:
+    runs-on: [self-hosted, dialog-github-runners]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.1
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+     
+      - name: Install dependencies
+        run: pnpm install
+        shell: bash
+
+      - name: Build library
+        run: pnpm run build:prod
+
+      - name: Build CDN bundle
+        run: pnpm run build:bundle:esm
+
+      - name: Configure AWS credentials from prod account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::893358932428:role/deploy-role
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          role-skip-session-tagging: true
+          aws-region: eu-west-1
+
+      - name: Upload to CDN (S3)
+        run: pnpm run deploy:s3
