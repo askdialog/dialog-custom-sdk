@@ -1,8 +1,5 @@
 name: Build & Publish Dialog SDK & Upload to CDN
 
-on:
-  workflow_dispatch:
-
 jobs:
   build-publish:
     runs-on: [self-hosted, dialog-github-runners]
