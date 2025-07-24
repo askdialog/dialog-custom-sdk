@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   tests:
-    name: 🧪 Run Tests & 🏗 Build & 📦 Publish
+    name: 🧪 Run Tests & 🏗 Build
     runs-on: [self-hosted, dialog-github-runners]
     timeout-minutes: 30
     steps:

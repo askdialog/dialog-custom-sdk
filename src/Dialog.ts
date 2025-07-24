@@ -162,6 +162,7 @@ export class Dialog {
 
     if (localeInfo === null) {
       console.error('Missing locale information');
+
       return;
     }
 
@@ -171,8 +172,6 @@ export class Dialog {
     script.async = true;
     script.src = config.assistantUrl;
     document.head.insertBefore(script, document.head.firstChild);
-
-    
 
     const div = document.createElement('div');
     div.id = 'dialog-shopify-ai';

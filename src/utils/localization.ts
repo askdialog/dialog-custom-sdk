@@ -24,7 +24,7 @@ export const getDetailedLocaleInfo = (
       language: languageName,
       countryCode,
       formatted: `${language}-${countryCode}`,
-      locale
+      locale,
     };
   } catch (e) {
     return null;

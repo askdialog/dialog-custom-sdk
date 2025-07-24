@@ -7,15 +7,15 @@ export interface Theme {
   fontFamily?: string;
   highlightProductName?: boolean;
   title?: {
-      fontSize?: string;
-      color?: string;
-  }
+    fontSize?: string;
+    color?: string;
+  };
   description?: {
-      fontSize?: string;
-      color?: string;
-  }
+    fontSize?: string;
+    color?: string;
+  };
   content?: {
-      fontSize?: string;
-      color?: string;
-  }
+    fontSize?: string;
+    color?: string;
+  };
 }
