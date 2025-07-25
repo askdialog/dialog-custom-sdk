@@ -28,6 +28,22 @@ pnpm add @dialog/dialog-sdk
 yarn add @dialog/dialog-sdk
 ```
 
+You can also use our CDN link if you’re not using a package manager.
+
+- Add the script to your project (replace X, Y, Z by versions)
+
+```html
+<script src="https://d2m6yt8rnm4dos.cloudfront.net/dialog-sdk.X.Y.Z.min.js"></script>
+```
+- The `DialogSDK` object will be available on the `window`. You can access all features as shown below:
+```typescript
+
+const client = new window.DialogSDK.Dialog({
+    apiKey: 'YOUR_API_KEY',
+    // ........
+})
+```
+
 ### Instantiate the client
 
 ```typescript
