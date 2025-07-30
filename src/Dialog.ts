@@ -170,6 +170,7 @@ export class Dialog {
     script.type = 'text/javascript';
     script.defer = true;
     script.async = true;
+    script.type = 'module';
     script.src = config.assistantUrl;
     document.head.insertBefore(script, document.head.firstChild);
 

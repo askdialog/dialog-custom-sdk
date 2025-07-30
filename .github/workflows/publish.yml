@@ -1,4 +1,4 @@
-name: Build & Publish Dialog SDK & Upload to CDN
+name: Build & Upload to CDN
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
         run: pnpm run build:prod
 
       - name: Build CDN bundle
-        run: pnpm run build:bundle:esm
+        run: pnpm run build:bundle:iife
 
       - name: Configure AWS credentials from prod account
         uses: aws-actions/configure-aws-credentials@v4
