@@ -232,4 +232,31 @@ const client = new Dialog({
 });
 ```
 
+### Tracking
 
+Our SDK includes a tracking system to monitor user interactions in your purchase flow.
+
+#### Automatic Tracking
+
+When a user interacts with our assistant and clicks on an "Add to Cart" CTA, it automatically triggers the previously configured `addToCart` callback (see "Client Instantiation" section). These events are tracked internally by our system.
+
+#### Manual Tracking
+
+However, we cannot automatically detect cart additions or checkout completions that occur **after** using our assistant. To get accurate data in your Dialog dashboards, you should use the following tracking methods:
+
+#### Available Methods
+
+```typescript
+
+client.registerAddToCartEvent({
+    productId: 'ProductIdentifier', // {string} - Required
+    quantity: 1, // {number} - Required
+    variantId: 'VariantIdentifier' // {string} - Optional
+});
+
+client.registerSubmitCheckoutEvent({
+    productId: 'ProductIdentifier', // {string} - Required
+    quantity: 1, // {number} - Required
+    variantId: 'VariantIdentifier' // {string} - Optional
+});
+```

@@ -125,7 +125,7 @@ export class Dialog {
     return this._callbacks.getProduct(productId, variantId);
   }
 
-  public addToCart({
+  public async addToCart({
     productId,
     quantity,
     variantId,
@@ -134,7 +134,9 @@ export class Dialog {
     quantity: number;
     variantId?: string;
   }): Promise<void> {
-    return this._callbacks.addToCart({ productId, variantId, quantity });
+    await this._callbacks.addToCart({ productId, variantId, quantity });
+    this.registerAddToCartEvent({ productId, variantId, quantity });
+    return;
   }
 
   public registerAddToCartEvent({
@@ -143,18 +145,34 @@ export class Dialog {
     quantity,
   }: {
     productId: string;
-    variantId: string;
+    variantId?: string;
     quantity: number;
   }): void {
     this._tracking.track(TrackingEvents.USER_ADDED_TO_CART, {
+      user_id: this._userId,
       product_id: productId,
       variant_id: variantId,
       quantity,
+      locale: this._locale,
     });
   }
 
-  public registerSubmitCheckoutEvent(): void {
-    this._tracking.track(TrackingEvents.USER_SUBMITTED_CHECKOUT);
+  public registerSubmitCheckoutEvent({
+    productId,
+    variantId,
+    quantity,
+  }: {
+    productId: string;
+    variantId?: string;
+    quantity: number;
+  }): void {
+    this._tracking.track(TrackingEvents.USER_SUBMITTED_CHECKOUT, {
+      user_id: this._userId,
+      product_id: productId,
+      variant_id: variantId,
+      quantity,
+      locale: this._locale,
+    });
   }
 
   private _loadAssistant(): void {
