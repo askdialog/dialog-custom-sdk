@@ -255,7 +255,7 @@ However, we cannot automatically detect cart additions or checkout completions t
 client.registerAddToCartEvent({
     productId: 'ProductIdentifier', // {string} - Required
     quantity: 1, // {number} - Required
-    currency: 'EUR' // {string} - Optional
+    currency: 'EUR', // {string} - Optional
     variantId: 'VariantIdentifier' // {string} - Optional
     
 });
@@ -263,7 +263,7 @@ client.registerAddToCartEvent({
 client.registerSubmitCheckoutEvent({
     productId: 'ProductIdentifier', // {string} - Required
     quantity: 1, // {number} - Required
-    currency: 'EUR' // {string} - Optional
+    currency: 'EUR', // {string} - Optional
     variantId: 'VariantIdentifier' // {string} - Optional
 });
 ```
