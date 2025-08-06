@@ -29,10 +29,12 @@ export class Dialog {
       productId,
       variantId,
       quantity,
+      currency,
     }: {
       productId: string;
       variantId?: string;
       quantity: number;
+      currency?: string;
     }) => Promise<void>;
     getProduct: (
       productId: string,
@@ -128,25 +130,29 @@ export class Dialog {
   public async addToCart({
     productId,
     quantity,
-    variantId,
+    currency,
+    variantId,  
   }: {
     productId: string;
     quantity: number;
+    currency: string;
     variantId?: string;
   }): Promise<void> {
-    await this._callbacks.addToCart({ productId, variantId, quantity });
-    this.registerAddToCartEvent({ productId, variantId, quantity });
+    await this._callbacks.addToCart({ productId, variantId, quantity, currency });
+    this.registerAddToCartEvent({ productId, variantId, quantity, currency });
     return;
   }
 
   public registerAddToCartEvent({
     productId,
-    variantId,
     quantity,
+    currency,
+    variantId,
   }: {
     productId: string;
-    variantId?: string;
     quantity: number;
+    currency: string;
+    variantId?: string;
   }): void {
     this._tracking.track(TrackingEvents.USER_ADDED_TO_CART, {
       user_id: this._userId,
@@ -154,17 +160,20 @@ export class Dialog {
       variant_id: variantId,
       quantity,
       locale: this._locale,
+      currency,
     });
   }
 
   public registerSubmitCheckoutEvent({
     productId,
-    variantId,
     quantity,
+    currency,
+    variantId,
   }: {
     productId: string;
-    variantId?: string;
     quantity: number;
+    currency: string;
+    variantId?: string;
   }): void {
     this._tracking.track(TrackingEvents.USER_SUBMITTED_CHECKOUT, {
       user_id: this._userId,
@@ -172,6 +181,7 @@ export class Dialog {
       variant_id: variantId,
       quantity,
       locale: this._locale,
+      currency,
     });
   }
 

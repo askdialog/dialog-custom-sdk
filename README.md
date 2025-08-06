@@ -56,10 +56,12 @@ const client = new Dialog({
     addToCart: async ({
     productId,
     quantity,
+    currency,
     variantId,
   }: {
     productId: string;
     quantity: number;
+    currency: string;
     variantId?: string;
   }) => Promise<void>, // required
     getProduct: async (
@@ -182,9 +184,11 @@ const client = new Dialog({
             productId,
             quantity,
             variantId,
+            currency
         }: {
             productId: string;
             quantity: number;
+            currency: string;
             variantId?: string;
         }): Promise<void> => {
             // Call your api to trigger addToCart
@@ -251,12 +255,15 @@ However, we cannot automatically detect cart additions or checkout completions t
 client.registerAddToCartEvent({
     productId: 'ProductIdentifier', // {string} - Required
     quantity: 1, // {number} - Required
+    currency: 'EUR' // {string} - Required
     variantId: 'VariantIdentifier' // {string} - Optional
+    
 });
 
 client.registerSubmitCheckoutEvent({
     productId: 'ProductIdentifier', // {string} - Required
     quantity: 1, // {number} - Required
+    currency: 'EUR' // {string} - Required
     variantId: 'VariantIdentifier' // {string} - Optional
 });
 ```
