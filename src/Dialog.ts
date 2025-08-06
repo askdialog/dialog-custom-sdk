@@ -27,14 +27,14 @@ export class Dialog {
   private _callbacks: {
     addToCart: ({
       productId,
-      variantId,
       quantity,
       currency,
+      variantId,
     }: {
       productId: string;
-      variantId?: string;
       quantity: number;
       currency?: string;
+      variantId?: string;
     }) => Promise<void>;
     getProduct: (
       productId: string,
@@ -135,7 +135,7 @@ export class Dialog {
   }: {
     productId: string;
     quantity: number;
-    currency: string;
+    currency?: string;
     variantId?: string;
   }): Promise<void> {
     await this._callbacks.addToCart({ productId, variantId, quantity, currency });
@@ -151,7 +151,7 @@ export class Dialog {
   }: {
     productId: string;
     quantity: number;
-    currency: string;
+    currency?: string;
     variantId?: string;
   }): void {
     this._tracking.track(TrackingEvents.USER_ADDED_TO_CART, {
@@ -172,7 +172,7 @@ export class Dialog {
   }: {
     productId: string;
     quantity: number;
-    currency: string;
+    currency?: string;
     variantId?: string;
   }): void {
     this._tracking.track(TrackingEvents.USER_SUBMITTED_CHECKOUT, {
