@@ -61,7 +61,7 @@ const client = new Dialog({
   }: {
     productId: string;
     quantity: number;
-    currency: string;
+    currency?: string;
     variantId?: string;
   }) => Promise<void>, // required
     getProduct: async (
@@ -188,7 +188,7 @@ const client = new Dialog({
         }: {
             productId: string;
             quantity: number;
-            currency: string;
+            currency?: string;
             variantId?: string;
         }): Promise<void> => {
             // Call your api to trigger addToCart
