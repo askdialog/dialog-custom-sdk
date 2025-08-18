@@ -193,15 +193,7 @@ export class Dialog {
 
       return;
     }
-
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.defer = true;
-    script.async = true;
-    script.type = 'module';
-    script.src = config.assistantUrl;
-    document.head.insertBefore(script, document.head.firstChild);
-
+  
     const div = document.createElement('div');
     div.id = 'dialog-shopify-ai';
     div.dataset.shopIsoCode = this._locale;
@@ -210,5 +202,15 @@ export class Dialog {
     div.dataset.countryCode = localeInfo.countryCode;
     div.dataset.language = localeInfo.language;
     document.body.appendChild(div);
+
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.defer = true;
+      script.async = true;
+      script.type = 'module';
+      script.src = config.assistantUrl;
+      document.head.insertBefore(script, document.head.firstChild);
+    }, 50);
   }
 }
