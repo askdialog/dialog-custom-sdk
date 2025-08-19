@@ -2,7 +2,7 @@ export interface SimplifiedProductVariant {
   id: string;
   displayName?: string;
   inventoryQuantity?: number;
-  price: string;
+  price?: string;
   currencyCode: string;
   compareAtPrice?: string | null;
   url?: string;
