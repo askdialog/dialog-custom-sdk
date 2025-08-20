@@ -9,10 +9,12 @@ export interface DialogConstructor {
       productId,
       quantity,
       variantId,
+      currency,
     }: {
       productId: string;
       quantity: number;
       variantId?: string;
+      currency?: string;
     }) => Promise<void>;
     getProduct: (
       productId: string,

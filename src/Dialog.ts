@@ -25,21 +25,8 @@ export class Dialog {
   private _locale: string;
 
   private _callbacks: {
-    addToCart: ({
-      productId,
-      quantity,
-      currency,
-      variantId,
-    }: {
-      productId: string;
-      quantity: number;
-      currency?: string;
-      variantId?: string;
-    }) => Promise<void>;
-    getProduct: (
-      productId: string,
-      variantId?: string,
-    ) => Promise<SimplifiedProduct>;
+    addToCart: DialogConstructor['callbacks']['addToCart'];
+    getProduct: DialogConstructor['callbacks']['getProduct'];
   };
   private _theme: Theme;
   private _userId: string;
