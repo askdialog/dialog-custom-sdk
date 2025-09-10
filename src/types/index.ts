@@ -4,3 +4,4 @@ export * from './trackings';
 export * from './suggestion';
 export * from './theme';
 export * from './constructor';
+export * from './assistantEvent';

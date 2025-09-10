@@ -4,6 +4,7 @@ declare global {
   interface Window {
     dialog?: {
       instance?: Dialog;
+      version?: string;
     };
   }
 }

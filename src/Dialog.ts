@@ -1,4 +1,5 @@
 import { uuidv7 } from 'uuidv7';
+import packageJson from '../package.json';
 import { defaultTheme } from './constants/theme';
 import { DialogConstructor } from './types/constructor';
 import { Theme } from './types/theme';
@@ -20,7 +21,10 @@ import { Tracking } from './Tracking';
 import { TrackingEvents } from './types/trackings';
 import { loadSuggestions } from './services/suggestions';
 import { config } from './config';
+import { AssistantEvent } from './types/assistantEvent';
 export class Dialog {
+  public static readonly VERSION = packageJson.version;
+
   private _apiKey: string;
   private _locale: string;
 
@@ -39,10 +43,11 @@ export class Dialog {
     this._callbacks = callbacks;
     this._theme = { ...defaultTheme, ...theme };
     this._userId = this._createOrRetrieveUserId(userId);
-    this._eventsHandler = new EventsHandler();
+    this._eventsHandler = new EventsHandler(locale, userId);
     this._tracking = new Tracking(apiKey);
     window.dialog = {
       instance: this,
+      version: Dialog.VERSION,
     };
     this._loadAssistant();
   }
@@ -105,6 +110,14 @@ export class Dialog {
       DialogEvents.SEND_GENERIC_QUESTION,
       params,
     );
+  }
+
+  public onAssistantEvent(listener: (event: AssistantEvent) => void) {
+    this._eventsHandler.onAssistantEvent(listener);
+  }
+
+  public dispatchAssistantEvent(event: AssistantEvent): void {
+    this._eventsHandler.emitAssistantEvent(event.type, event.payload);
   }
 
   public getProduct(

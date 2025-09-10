@@ -267,3 +267,71 @@ client.registerSubmitCheckoutEvent({
     variantId: 'VariantIdentifier' // {string} - Optional
 });
 ```
+
+#### Listen for Assistant Events
+
+The SDK provides real-time event listening for user interactions with the Dialog assistant.
+
+```typescript
+// Basic event listener setup
+const unsubscribe = client.onAssistantEvent((event) => {
+  console.log('Event type:', event.type);
+  console.log('Event payload:', event.payload);
+});
+
+// Clean up the event listener when needed
+unsubscribe();
+```
+
+#### Event Structure
+
+All events follow this structure:
+
+```typescript
+interface AssistantEvent {
+  type: string;
+  payload: {
+    // Common fields (included in all events)
+    date: string;        // ISO timestamp
+    locale: string;      // Current locale
+    url: string;         // Current page URL
+    userId?: string;     // User ID if available
+    
+    // Event-specific fields
+    productId?: string;  // When interacting with products
+    variantId?: string;  // When interacting with variants
+  }
+}
+```
+
+#### Available Event Types
+
+- **userOpenedAssistant** - User opened the assistant interface
+- **userClosedAssistant** - User closed the assistant interface  
+- **userSentMessage** - User sent a message to the assistant
+- **userClickedOnProductCard** - User clicked on a product card for more details
+- **userOpenedRecommendation** - User clicked on a product recommendation
+- **userAddedToCart** - User added a product to cart via the assistant
+- **userSendPositiveFeedback** - User gave positive feedback on AI response
+- **userSendNegativeFeedback** - User gave negative feedback on AI response
+
+#### Example Usage
+
+```typescript
+client.onAssistantEvent((event) => {
+  switch (event.type) {
+    case 'userAddedToCart':
+      // Track conversion in your analytics
+      analytics.track('assistant_conversion', {
+        productId: event.payload.productId,
+        timestamp: event.payload.date
+      });
+      break;
+      
+    case 'userSendNegativeFeedback':
+      // Log for improvement analysis
+      console.log('Negative feedback at:', event.payload.url);
+      break;
+  }
+});
+```
