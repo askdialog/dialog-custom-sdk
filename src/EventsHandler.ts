@@ -1,4 +1,10 @@
-import { AssistantEvent, AssistantEventPayload, CommonPayload, DIALOG_ASSISTANT_EVENT, GenericAssistantEventPayload } from './types/assistantEvent';
+import {
+  AssistantEvent,
+  AssistantEventPayload,
+  CommonPayload,
+  DIALOG_ASSISTANT_EVENT,
+  GenericAssistantEventPayload,
+} from './types/assistantEvent';
 import { DIALOG_CUSTOM_EVENT, DialogEvent } from './types/events';
 
 export class EventsHandler {
@@ -32,15 +38,18 @@ export class EventsHandler {
     window.dispatchEvent(event);
   }
 
-  public onAssistantEvent(listener: (event: AssistantEvent<CommonPayload & AssistantEventPayload>) => void) {
+  public onAssistantEvent(
+    listener: (
+      event: AssistantEvent<CommonPayload & AssistantEventPayload>,
+    ) => void,
+  ): () => void {
     const handler = (e: Event) => {
-      const customEvent = e as CustomEvent<AssistantEvent<AssistantEventPayload>>;
+      const customEvent = e as CustomEvent<AssistantEvent>;
 
       const commonPayload: CommonPayload = {
         locale: this._locale,
         url: window.location.href,
         date: new Date().toISOString(),
-
       };
 
       listener({
@@ -49,7 +58,7 @@ export class EventsHandler {
           userId: this._userId,
           ...commonPayload,
           ...customEvent.detail.payload,
-        }
+        },
       });
     };
 
@@ -60,4 +69,3 @@ export class EventsHandler {
     };
   }
 }
-

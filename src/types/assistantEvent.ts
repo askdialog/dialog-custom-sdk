@@ -23,8 +23,7 @@ export interface GenericAssistantEventPayload {
   variantId?: string;
 }
 
-export type AssistantEventPayload =
-  | GenericAssistantEventPayload;
+export type AssistantEventPayload = GenericAssistantEventPayload;
 
 export interface AssistantEvent<T = AssistantEventPayload> {
   type: AssistantEvents;
