@@ -11,9 +11,11 @@ export class Tracking {
     this._apiKey = apiKey;
     this._posthog = posthog.init(this._token, {
       api_host: this._apiHost,
-    });
-    this._posthog.identify(apiKey, {
-      host: window.location.hostname,
+      autocapture: false,
+      disable_session_recording: true,
+      capture_pageleave: false,
+      capture_pageview: false,
+      capture_performance: false,
     });
   }
 
