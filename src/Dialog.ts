@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { uuidv7 } from 'uuidv7';
 import packageJson from '../package.json';
 import { defaultTheme } from './constants/theme';
@@ -112,7 +113,7 @@ export class Dialog {
     );
   }
 
-  public onAssistantEvent(listener: (event: AssistantEvent) => void) {
+  public onAssistantEvent(listener: (event: AssistantEvent) => void): void {
     this._eventsHandler.onAssistantEvent(listener);
   }
 
@@ -131,15 +132,21 @@ export class Dialog {
     productId,
     quantity,
     currency,
-    variantId,  
+    variantId,
   }: {
     productId: string;
     quantity: number;
     currency?: string;
     variantId?: string;
   }): Promise<void> {
-    await this._callbacks.addToCart({ productId, variantId, quantity, currency });
+    await this._callbacks.addToCart({
+      productId,
+      variantId,
+      quantity,
+      currency,
+    });
     this.registerAddToCartEvent({ productId, variantId, quantity, currency });
+
     return;
   }
 
@@ -193,7 +200,7 @@ export class Dialog {
 
       return;
     }
-  
+
     const div = document.createElement('div');
     div.id = 'dialog-shopify-ai';
     div.dataset.shopIsoCode = this._locale;

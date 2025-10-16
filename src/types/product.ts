@@ -27,7 +27,7 @@ export interface SimplifiedProduct {
   title: string;
   handle: string;
   descriptionHtml?: string;
-  url?: string; 
+  url?: string;
   totalInventory: number;
   featuredImage?: {
     url?: string;
